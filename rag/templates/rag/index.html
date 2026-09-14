@@ -20,5 +20,15 @@
         <pre>{{ extracted_text }}</pre>
     {% endif %}
 
+    {% if chunks %}
+        <h2>Chunks: {{ chunks|length }}</h2>
+
+        {% for chunk in chunks %}
+            <hr>
+            <p><strong>Chunk {{ forloop.counter }}</strong></p>
+            <pre>{{ chunk }}</pre>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>
