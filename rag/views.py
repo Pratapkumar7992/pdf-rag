@@ -8,6 +8,8 @@ def home(request):
     extracted_text = ""
     chunks = []
     embeddings = []
+    embedding_count = 0
+    embedding_dimension = 0
 
     if request.method == "POST":
         pdf = request.FILES.get("pdf")
@@ -22,11 +24,13 @@ def home(request):
             chunks = create_chunk(extracted_text)
             
             embeddings = create_embeddings(chunks)
+            embedding_count = len(embeddings)
 
     return render(
         request, 
         "rag/index.html", 
         {"extracted_text": extracted_text,
          "chunks": chunks,
-         "embeddings": len(embeddings)}
+         "embedding_count": embedding_count
+        }
     )

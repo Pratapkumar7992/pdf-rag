@@ -30,5 +30,11 @@
         {% endfor %}
     {% endif %}
 
+    {% if embedding_count %}
+        <h2>Embeddings Generated</h2>
+
+        <p>Total vectors: {{ embedding_count }}</p>
+    {% endif %}
+
 </body>
 </html>
