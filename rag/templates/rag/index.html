@@ -15,5 +15,10 @@
         <button type="submit">Upload PDF</button>
     </form>
 
+    {% if extracted_text %}
+        <h2>Extracted Text:</h2>
+        <pre>{{ extracted_text }}</pre>
+    {% endif %}
+
 </body>
 </html>
