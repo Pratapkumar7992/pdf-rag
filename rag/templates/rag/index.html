@@ -15,6 +15,39 @@
         <button type="submit">Upload PDF</button>
     </form>
 
+    <h2>Ask a Question</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="question"
+            placeholder="Ask something about the PDF"
+            required
+        >
+
+        <button type="submit">Ask</button>
+    </form>
+
+    {% if retrieved_chunks %}
+
+        <h2>Retrieved Context</h2>
+
+        {% for chunk in retrieved_chunks %}
+
+            <hr>
+
+            <p>
+                <strong>Relevant Chunk {{ forloop.counter }}</strong>
+            </p>
+
+            <pre>{{ chunk }}</pre>
+
+        {% endfor %}
+
+    {% endif %}
+
     {% if extracted_text %}
         <h2>Extracted Text:</h2>
         <pre>{{ extracted_text }}</pre>
