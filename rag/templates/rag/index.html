@@ -3,18 +3,39 @@
 <head>
     <title>PDF RAG</title>
 </head>
+
 <body>
 
     <h1>PDF RAG System</h1>
 
+    <!-- PDF Upload -->
+    <h2>Upload PDF</h2>
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <input type="file" name="pdf" accept=".pdf">
+        <input
+            type="file"
+            name="pdf"
+            accept=".pdf"
+            required
+        >
 
-        <button type="submit">Upload PDF</button>
+        <button type="submit">
+            Upload PDF
+        </button>
     </form>
 
+    {% if upload_message %}
+        <p><strong>{{ upload_message }}</strong></p>
+    {% endif %}
+
+    {% if response_message %}
+        <p><strong>Response:</strong> {{ response_message }} | <strong>HTTP Status:</strong> {{ request_status }}</p>
+    {% endif %}
+
+
+    <!-- Ask Question -->
     <h2>Ask a Question</h2>
 
     <form method="POST">
@@ -27,47 +48,43 @@
             required
         >
 
-        <button type="submit">Ask</button>
+        <button type="submit">
+            Ask
+        </button>
     </form>
 
+
+    <!-- Retrieved Context -->
     {% if retrieved_chunks %}
 
         <h2>Retrieved Context</h2>
 
         {% for chunk in retrieved_chunks %}
 
-            <hr>
+            <div>
+                <h3>Relevant Chunk {{ forloop.counter }}</h3>
 
-            <p>
-                <strong>Relevant Chunk {{ forloop.counter }}</strong>
-            </p>
-
-            <pre>{{ chunk }}</pre>
+                <p>
+                    {{ chunk }}
+                </p>
+            </div>
 
         {% endfor %}
 
     {% endif %}
 
-    {% if extracted_text %}
-        <h2>Extracted Text:</h2>
-        <pre>{{ extracted_text }}</pre>
-    {% endif %}
 
-    {% if chunks %}
-        <h2>Chunks: {{ chunks|length }}</h2>
+    <!-- Answer -->
+    {% if answer %}
 
-        {% for chunk in chunks %}
-            <hr>
-            <p><strong>Chunk {{ forloop.counter }}</strong></p>
-            <pre>{{ chunk }}</pre>
-        {% endfor %}
-    {% endif %}
+        <h2>Answer</h2>
 
-    {% if embedding_count %}
-        <h2>Embeddings Generated</h2>
+        <p>
+            {{ answer }}
+        </p>
 
-        <p>Total vectors: {{ embedding_count }}</p>
     {% endif %}
 
 </body>
 </html>
+
